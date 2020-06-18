@@ -1,0 +1,45 @@
+git fetch origin pull/17283/head && git checkout FETCH_HEAD
+
+export BDB_PREFIX='/home/raj/github-repo/bitcoin/db4'
+
+./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
+
+make -j"$(($(nproc)+1))" check
+
+commit hash of head : git log --pretty=format:'%h' -n 1
+
+Bitcoin Fuzzinng -----------------
+Compile Source for Fuzzing : 
+./configure --disable-ccache --disable-shared --enable-tests --enable-fuzz CC=${AFLPATH}/afl-clang-fast CXX=${AFLPATH}/afl-clang-fast++
+export AFL_HARDEN=1
+cd src/
+
+libFuzzer:
+./configure --disable-ccache --enable-fuzz --with-sanitizers=fuzzer,address,undefined CC=clang CXX=clang++
+
+FUZZ the Fucker:
+export FUZZ_TARGET=fuzz_target_foo  # Pick a fuzz_target
+mkdir ${AFLOUT}/${FUZZ_TARGET}
+$AFLPATH/afl-fuzz -i ${DIR_FUZZ_IN}/${FUZZ_TARGET} -o ${AFLOUT}/${FUZZ_TARGET} -m52 -- test/fuzz/${FUZZ_TARGET}
+
+
+
+---DOCKER---------------------
+remove all exited containers: 
+	docker rm $(docker ps -a -q -f status=exited)
+
+--Compile core for debug----
+./configure CXXFLAGS="-O0 -g" CFLAGS="-O0 -g"
+
+--Things to switch off------
+./configure --without-miniupnpc --disable-bench --disable-wallet --without-gui
+
+./configure --without-miniupnpc --disable-bench --without-gui
+
+
+---SIZE of directories---
+du -h --max-depth=1 | sort -hr
+
+
+---BENCH--------
+make -C src bitcoin_bench
