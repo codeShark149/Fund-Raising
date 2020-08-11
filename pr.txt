@@ -43,3 +43,34 @@ du -h --max-depth=1 | sort -hr
 
 ---BENCH--------
 make -C src bitcoin_bench
+
+
+----GIT CONFIG-----------
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = https://github.com/bitcoin/bitcoin.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+        fetch = +refs/pull/*/merge:refs/remotes/origin/pr/merge/*
+[remote "myown"]
+        url = https://github.com/rajarshimaitra/bitcoin.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+[branch "fixing-waituntil"]
+        remote = myown
+        merge = refs/heads/fixing-waituntil
+[branch "fee-in-testmempoolaccept"]
+        remote = myown
+        merge = refs/heads/fee-in-testmempoolaccept
+[branch "fee-trial3"]
+        remote = myown
+        merge = refs/heads/fee-trial3
+[branch "loadmempool-UB"]
+        remote = myown
+        merge = refs/heads/loadmempool-UB
