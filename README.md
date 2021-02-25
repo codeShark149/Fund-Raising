@@ -19,8 +19,6 @@ new world order of hyperbitcoinisation.
 
 Please share this message among your friends to help this cause.
 
-Bitcoin Address : 36fn4UPBGJmvEBG911iPm1Np88k3xsG4Bu
-
 Bitcoin Address owner:
 
 Rajarshi Maitra
